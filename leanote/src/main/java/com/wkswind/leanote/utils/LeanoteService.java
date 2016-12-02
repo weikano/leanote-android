@@ -1,10 +1,9 @@
 package com.wkswind.leanote.utils;
 
-import com.wkswind.leanote.database.User;
+import com.wkswind.leanote.account.LeanoteAccount;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -13,5 +12,5 @@ import retrofit2.http.Query;
 
 public interface LeanoteService {
     @GET("auth/login")
-    Observable<User> login(@Query("email") String email, @Query("pwd") String pwd);
+    Observable<LeanoteAccount> login(@Query("email") String email, @Query("pwd") String pwd);
 }

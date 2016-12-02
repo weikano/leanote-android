@@ -1,6 +1,6 @@
 package com.wkswind.leanote.utils;
 
-import com.wkswind.leanote.database.User;
+import com.wkswind.leanote.account.LeanoteAccount;
 
 import org.junit.Test;
 
@@ -16,9 +16,9 @@ public class RetrofitUtilsTest {
     public void login() throws Exception {
         final String email = "wkswind@gmail.com";
         final String pwd = "palm?fish";
-        RetrofitUtils.login(email, pwd).subscribe(new Consumer<User>() {
+        RetrofitUtils.login(email, pwd).subscribe(new Consumer<LeanoteAccount>() {
             @Override
-            public void accept(User user) throws Exception {
+            public void accept(LeanoteAccount user) throws Exception {
                 assertEquals(user.getEmail(), email);
                 assertEquals(user.getUsername(), email);
                 assertEquals(user.getToken(), "58411fe7ab64417032005dfa");

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen android:title="@string/app_name" />
+    <PreferenceScreen android:key="ActionAuthenticator"
+        android:title="@string/app_name"
+        android:summary="@string/app_name">
+        <intent android:action="ActionAuthenticator"
+            android:targetPackage="com.wkswind.leanote"
+            android:targetClass="LeanoteAuthenticator.class" />
+    </PreferenceScreen>
+</PreferenceScreen>

@@ -1,7 +1,7 @@
 package com.wkswind.leanote.utils;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.wkswind.leanote.database.User;
+import com.wkswind.leanote.account.LeanoteAccount;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -22,7 +22,7 @@ public class RetrofitUtils {
         return new Retrofit.Builder().addCallAdapterFactory(callFactory).addConverterFactory(convertFactory).baseUrl(URL).build();
     }
 
-    public static Observable<User> login(String email, String pwd) {
+    public static Observable<LeanoteAccount> login(String email, String pwd) {
         return newRetrofit().create(LeanoteService.class).login(email,pwd);
     }
 }

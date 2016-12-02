@@ -1,4 +1,4 @@
-package com.wkswind.leanote.database;
+package com.wkswind.leanote.account;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,7 +7,8 @@ import android.os.Parcelable;
  * Created by Administrator on 2016-12-2.
  */
 
-public class User implements Parcelable {
+public class LeanoteAccount implements Parcelable {
+
     private String userId;
     private String email;
     private String username;
@@ -58,31 +59,31 @@ public class User implements Parcelable {
         dest.writeString(this.token);
     }
 
-    public User() {
+    public LeanoteAccount() {
     }
 
-    protected User(Parcel in) {
+    protected LeanoteAccount(Parcel in) {
         this.userId = in.readString();
         this.email = in.readString();
         this.username = in.readString();
         this.token = in.readString();
     }
 
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+    public static final Parcelable.Creator<LeanoteAccount> CREATOR = new Parcelable.Creator<LeanoteAccount>() {
         @Override
-        public User createFromParcel(Parcel source) {
-            return new User(source);
+        public LeanoteAccount createFromParcel(Parcel source) {
+            return new LeanoteAccount(source);
         }
 
         @Override
-        public User[] newArray(int size) {
-            return new User[size];
+        public LeanoteAccount[] newArray(int size) {
+            return new LeanoteAccount[size];
         }
     };
 
     @Override
     public String toString() {
-        return "User{" +
+        return "LeanoteAccount{" +
                 "userId='" + userId + '\'' +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
