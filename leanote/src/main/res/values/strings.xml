@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">蚂蚁笔记</string>
+    <string name="notes">笔记</string>
+    <string name="blogs">博文</string>
+    <string name="categories">分类</string>
+    <string name="me">我</string>
+    <string name="settings">设置</string>
+</resources>
