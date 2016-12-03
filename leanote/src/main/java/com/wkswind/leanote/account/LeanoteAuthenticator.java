@@ -9,7 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.Toast;
 
+import com.wkswind.leanote.BuildConfig;
+import com.wkswind.leanote.R;
 import com.wkswind.leanote.utils.RetrofitUtils;
 
 import org.reactivestreams.Subscriber;
@@ -22,10 +25,10 @@ import retrofit2.Response;
  * Created by Administrator on 2016-12-2.
  */
 
-public class LeanoteAuthenticator extends AbstractAccountAuthenticator {
+class LeanoteAuthenticator extends AbstractAccountAuthenticator {
     private Context context;
     private AccountManager am;
-    public LeanoteAuthenticator(Context context) {
+    LeanoteAuthenticator(Context context) {
         super(context);
         this.context = context;
         am = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
@@ -38,13 +41,19 @@ public class LeanoteAuthenticator extends AbstractAccountAuthenticator {
 
     @Override
     public Bundle addAccount(AccountAuthenticatorResponse accountAuthenticatorResponse, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) throws NetworkErrorException {
-        final Intent intent = new Intent(context, LoginActivity.class);
-        intent.putExtra(AccountUtils.KEY_ACCOUNT_TYPE, accountType);
-        intent.putExtra(AccountUtils.KEY_AUTH_TYPE, authTokenType);
-        intent.putExtra(AccountUtils.KEY_ADD_ACCOUNT, true);
-        intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, accountAuthenticatorResponse);
+        final AccountManager am = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
+        Account[] accounts = am.getAccountsByTypeForPackage(BuildConfig.ACCOUNT_TYPE, context.getPackageName());
         final Bundle bundle = new Bundle();
-        bundle.putParcelable(AccountManager.KEY_INTENT, intent);
+        if(accounts.length == 0){
+            final Intent intent = new Intent(context, LoginActivity.class);
+            intent.putExtra(AccountUtils.KEY_ACCOUNT_TYPE, accountType);
+            intent.putExtra(AccountUtils.KEY_AUTH_TYPE, authTokenType);
+            intent.putExtra(AccountUtils.KEY_ADD_ACCOUNT, true);
+            intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, accountAuthenticatorResponse);
+            bundle.putParcelable(AccountManager.KEY_INTENT, intent);
+        }else{
+            Toast.makeText(context, R.string.account_exists, Toast.LENGTH_SHORT).show();
+        }
         return bundle;
     }
 

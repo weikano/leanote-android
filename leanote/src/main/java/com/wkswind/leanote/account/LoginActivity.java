@@ -5,8 +5,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -24,9 +26,12 @@ import com.wkswind.leanote.utils.Utils;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -52,6 +57,12 @@ public class LoginActivity extends AccountAuthCompatActivity {
         if(extras != null){
             addAccount = extras.getBoolean(AccountUtils.KEY_ADD_ACCOUNT);
         }
+        AccountUtils.hasAccount(this).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                addAccount = !aBoolean;
+            }
+        });
         mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -184,6 +195,12 @@ public class LoginActivity extends AccountAuthCompatActivity {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                    AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) mProgressView.getBackground();
+                    if(show){
+                        drawable.start();
+                    }else {
+                        drawable.stop();
+                    }
                 }
             });
     }

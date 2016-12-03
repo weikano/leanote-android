@@ -3,6 +3,7 @@ package com.wkswind.leanote.account;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
+import android.content.Intent;
 
 import com.wkswind.leanote.BuildConfig;
 import com.wkswind.leanote.utils.Utils;
@@ -10,8 +11,9 @@ import com.wkswind.leanote.utils.Utils;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.functions.Function;
 
-class AccountUtils {
+public class AccountUtils {
 
     static final String KEY_USER_ID = Utils.generateKeyPrefix(AccountUtils.class) + "KEY_USER_ID";
     static final String KEY_USER_NAME = Utils.generateKeyPrefix(AccountUtils.class) + "KEY_USER_NAME";
@@ -21,7 +23,7 @@ class AccountUtils {
     static final String KEY_AUTH_TYPE = Utils.generateKeyPrefix(AccountUtils.class)+"KEY_AUTH_TYPE";
     static final String KEY_ADD_ACCOUNT = Utils.generateKeyPrefix(AccountUtils.class) + "KEY_ADD_ACCOUNT";
 
-    static Observable<Account[]> getAccount(final Context context){
+    public static Observable<Account[]> getAccount(final Context context){
         return Observable.create(new ObservableOnSubscribe<Account[]>() {
             @Override
             public void subscribe(ObservableEmitter<Account[]> e) throws Exception {
@@ -32,6 +34,22 @@ class AccountUtils {
             }
         });
     }
+
+    public static Observable<Boolean> hasAccount(final Context context){
+        return getAccount(context).map(new Function<Account[], Boolean>() {
+            @Override
+            public Boolean apply(Account[] accounts) throws Exception {
+                return accounts != null && accounts.length == 1;
+            }
+        });
+    }
+
+    public static void enterLogin(Context context){
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
+    }
+
+
 
 
 }

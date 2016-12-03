@@ -13,10 +13,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.wkswind.leanote.account.AccountUtils;
+import com.wkswind.leanote.base.BaseActivity;
 
 import java.util.Arrays;
 
-public class LaunchActivity extends AppCompatActivity {
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+
+public class LaunchActivity extends BaseActivity {
+    Observer<Account[]> observer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,21 +34,37 @@ public class LaunchActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        observer = new Observer<Account[]>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Account[] value) {
+                if(value == null || value.length == 0){
+
+                }else {
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+
         checkAccount();
     }
 
     private void checkAccount() {
-        AccountManager am = (AccountManager) getSystemService(ACCOUNT_SERVICE);
-        Account[] account = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            account = am.getAccountsByTypeForPackage(BuildConfig.ACCOUNT_TYPE, getPackageName());
-        }else {
-            account = am.getAccountsByType(BuildConfig.ACCOUNT_TYPE);
-        }
-        if(account == null || account.length == 0) {
-
-        }
-//        am.getAccountsByTypeForPackage()
+        AccountUtils.getAccount(this).subscribe(observer);
     }
 
     @Override
@@ -55,6 +80,19 @@ public class LaunchActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.nav_me) {
+            AccountUtils.hasAccount(this).subscribe(new Consumer<Boolean>() {
+                @Override
+                public void accept(Boolean aBoolean) throws Exception {
+                    if(aBoolean){
+                        Toast.makeText(LaunchActivity.this, "已登录，进入个人信息", Toast.LENGTH_SHORT).show();
+                    }else {
+                        AccountUtils.enterLogin(LaunchActivity.this);
+//                        Toast.makeText(LaunchActivity.this, "跳转到登录界面", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
         return super.onOptionsItemSelected(item);
     }
 }

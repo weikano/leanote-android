@@ -9,6 +9,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.wkswind.leanote.BuildConfig;
+import com.wkswind.leanote.utils.Utils;
 
 /**
  * Created by Administrator on 2016-12-2.
@@ -102,15 +103,16 @@ public class LeanoteAccount implements Parcelable {
         final Intent intent = new Intent();
         final AccountManager am = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
         final Account account = new Account(Email, BuildConfig.ACCOUNT_TYPE);
+        final String cipher = Utils.encrypt(context, password);
         if(addAccount){
             final Bundle userData = new Bundle();
             userData.putString(AccountUtils.KEY_USER_ID, UserId);
             userData.putString(AccountUtils.KEY_EMAIL, Email);
             userData.putString(AccountUtils.KEY_USER_NAME, Username);
-            am.addAccountExplicitly(account, password, userData);
+            am.addAccountExplicitly(account, cipher, userData);
         }else{
             am.invalidateAuthToken(BuildConfig.ACCOUNT_TYPE, Token);
-            am.setPassword(account,password);
+            am.setPassword(account, cipher);
         }
         intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, Email);
         intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE,BuildConfig.ACCOUNT_TYPE);
