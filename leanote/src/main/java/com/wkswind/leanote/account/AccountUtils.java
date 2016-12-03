@@ -3,21 +3,25 @@ package com.wkswind.leanote.account;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
-import android.os.Build;
 
 import com.wkswind.leanote.BuildConfig;
+import com.wkswind.leanote.utils.Utils;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 
-/**
- * Created by Administrator on 2016-12-2.
- */
+class AccountUtils {
 
-public class AccountUtils {
+    static final String KEY_USER_ID = Utils.generateKeyPrefix(AccountUtils.class) + "KEY_USER_ID";
+    static final String KEY_USER_NAME = Utils.generateKeyPrefix(AccountUtils.class) + "KEY_USER_NAME";
+    static final String KEY_EMAIL = Utils.generateKeyPrefix(AccountUtils.class) + "KEY_EMAIL";
 
-    public static Observable<Account[]> getAccount(final Context context){
+    static final String KEY_ACCOUNT_TYPE = Utils.generateKeyPrefix(AccountUtils.class)+"KEY_ACCOUNT_TYPE";
+    static final String KEY_AUTH_TYPE = Utils.generateKeyPrefix(AccountUtils.class)+"KEY_AUTH_TYPE";
+    static final String KEY_ADD_ACCOUNT = Utils.generateKeyPrefix(AccountUtils.class) + "KEY_ADD_ACCOUNT";
+
+    static Observable<Account[]> getAccount(final Context context){
         return Observable.create(new ObservableOnSubscribe<Account[]>() {
             @Override
             public void subscribe(ObservableEmitter<Account[]> e) throws Exception {
@@ -28,4 +32,6 @@ public class AccountUtils {
             }
         });
     }
+
+
 }

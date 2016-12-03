@@ -16,7 +16,7 @@ public class RetrofitUtilsTest {
     public void login() throws Exception {
         final String email = "wkswind@gmail.com";
         final String pwd = "palm?fish";
-        RetrofitUtils.login(email, pwd).subscribe(new Consumer<LeanoteAccount>() {
+        RetrofitUtils.rxLogin(email, pwd).subscribe(new Consumer<LeanoteAccount>() {
             @Override
             public void accept(LeanoteAccount user) throws Exception {
                 assertEquals(user.getEmail(), email);
