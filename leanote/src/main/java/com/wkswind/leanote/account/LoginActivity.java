@@ -33,6 +33,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * A rxLogin screen that offers rxLogin via email/password.
@@ -103,6 +104,7 @@ public class LoginActivity extends AccountAuthCompatActivity {
 
             @Override
             public void onError(Throwable t) {
+                Timber.e(t);
                 showProgress(false);
                 Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }

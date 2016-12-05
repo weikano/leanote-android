@@ -68,4 +68,8 @@ public class Utils {
         }
         return null;
     }
+
+    public static String getHost(){
+        return "https://leanote.com/api/";
+    }
 }

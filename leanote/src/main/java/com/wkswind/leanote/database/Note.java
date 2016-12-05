@@ -3,6 +3,8 @@ package com.wkswind.leanote.database;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.wkswind.leanote.base.LeanoteResponseBody;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
@@ -11,97 +13,140 @@ import org.greenrobot.greendao.annotation.Generated;
  * Created by Administrator on 2016-12-2.
  */
 @Entity
-public class Note implements Parcelable {
-    @Id
-    private String noteId;
-    private String notebookId;
-    private String userId;
-    private String title;
-    private String tags;
-    private String content;
-    private boolean markdown;
-    private boolean blog;
-    private boolean trash;
+public class Note extends LeanoteResponseBody implements Parcelable {
+    @Id(autoincrement = true)
+    private long id;
+    private String NoteId;
+    private String NotebookId;
+    private String UserId;
+    private String Title;
+    private String Desc;
+    private String Tags;
+    private String Abstract;
+    private String Content;
+
+    private boolean IsMarkdown;
+    private boolean IsBlog;
+    private boolean IsTrash;
+    private boolean isDeleted;
+    private int Usn;
     private String files;
-    private long createdTime;
-    private long updatedTime;
-    private long publishTime;
-    private int usn;
-    private String desc;
-    private String abstractNote;
+    private long CreatedTime;
+    private long UpdatedTime;
+    private long PublishTime;
     private boolean dirty;
     private boolean uploading;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getNoteId() {
-        return noteId;
+        return NoteId;
     }
 
     public void setNoteId(String noteId) {
-        this.noteId = noteId;
+        NoteId = noteId;
     }
 
     public String getNotebookId() {
-        return notebookId;
+        return NotebookId;
     }
 
     public void setNotebookId(String notebookId) {
-        this.notebookId = notebookId;
+        NotebookId = notebookId;
     }
 
     public String getUserId() {
-        return userId;
+        return UserId;
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        UserId = userId;
     }
 
     public String getTitle() {
-        return title;
+        return Title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        Title = title;
+    }
+
+    public String getDesc() {
+        return Desc;
+    }
+
+    public void setDesc(String desc) {
+        Desc = desc;
     }
 
     public String getTags() {
-        return tags;
+        return Tags;
     }
 
     public void setTags(String tags) {
-        this.tags = tags;
+        Tags = tags;
+    }
+
+    public String getAbstract() {
+        return Abstract;
+    }
+
+    public void setAbstract(String anAbstract) {
+        Abstract = anAbstract;
     }
 
     public String getContent() {
-        return content;
+        return Content;
     }
 
     public void setContent(String content) {
-        this.content = content;
+        Content = content;
     }
 
     public boolean isMarkdown() {
-        return markdown;
+        return IsMarkdown;
     }
 
     public void setMarkdown(boolean markdown) {
-        this.markdown = markdown;
+        IsMarkdown = markdown;
     }
 
     public boolean isBlog() {
-        return blog;
+        return IsBlog;
     }
 
     public void setBlog(boolean blog) {
-        this.blog = blog;
+        IsBlog = blog;
     }
 
     public boolean isTrash() {
-        return trash;
+        return IsTrash;
     }
 
     public void setTrash(boolean trash) {
-        this.trash = trash;
+        IsTrash = trash;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public int getUsn() {
+        return Usn;
+    }
+
+    public void setUsn(int usn) {
+        Usn = usn;
     }
 
     public String getFiles() {
@@ -113,51 +158,27 @@ public class Note implements Parcelable {
     }
 
     public long getCreatedTime() {
-        return createdTime;
+        return CreatedTime;
     }
 
     public void setCreatedTime(long createdTime) {
-        this.createdTime = createdTime;
+        CreatedTime = createdTime;
     }
 
     public long getUpdatedTime() {
-        return updatedTime;
+        return UpdatedTime;
     }
 
     public void setUpdatedTime(long updatedTime) {
-        this.updatedTime = updatedTime;
+        UpdatedTime = updatedTime;
     }
 
     public long getPublishTime() {
-        return publishTime;
+        return PublishTime;
     }
 
     public void setPublishTime(long publishTime) {
-        this.publishTime = publishTime;
-    }
-
-    public int getUsn() {
-        return usn;
-    }
-
-    public void setUsn(int usn) {
-        this.usn = usn;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public String getAbstractNote() {
-        return abstractNote;
-    }
-
-    public void setAbstractNote(String abstractNote) {
-        this.abstractNote = abstractNote;
+        PublishTime = publishTime;
     }
 
     public boolean isDirty() {
@@ -183,36 +204,58 @@ public class Note implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.noteId);
-        dest.writeString(this.notebookId);
-        dest.writeString(this.userId);
-        dest.writeString(this.title);
-        dest.writeString(this.tags);
-        dest.writeString(this.content);
-        dest.writeByte(this.markdown ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.blog ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.trash ? (byte) 1 : (byte) 0);
+        dest.writeLong(this.id);
+        dest.writeString(this.NoteId);
+        dest.writeString(this.NotebookId);
+        dest.writeString(this.UserId);
+        dest.writeString(this.Title);
+        dest.writeString(this.Desc);
+        dest.writeString(this.Tags);
+        dest.writeString(this.Abstract);
+        dest.writeString(this.Content);
+        dest.writeByte(this.IsMarkdown ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.IsBlog ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.IsTrash ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isDeleted ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.Usn);
         dest.writeString(this.files);
-        dest.writeLong(this.createdTime);
-        dest.writeLong(this.updatedTime);
-        dest.writeLong(this.publishTime);
-        dest.writeInt(this.usn);
-        dest.writeString(this.desc);
-        dest.writeString(this.abstractNote);
+        dest.writeLong(this.CreatedTime);
+        dest.writeLong(this.UpdatedTime);
+        dest.writeLong(this.PublishTime);
         dest.writeByte(this.dirty ? (byte) 1 : (byte) 0);
         dest.writeByte(this.uploading ? (byte) 1 : (byte) 0);
     }
 
-    public boolean getMarkdown() {
-        return this.markdown;
+    public boolean getIsMarkdown() {
+        return this.IsMarkdown;
     }
 
-    public boolean getBlog() {
-        return this.blog;
+    public void setIsMarkdown(boolean IsMarkdown) {
+        this.IsMarkdown = IsMarkdown;
     }
 
-    public boolean getTrash() {
-        return this.trash;
+    public boolean getIsBlog() {
+        return this.IsBlog;
+    }
+
+    public void setIsBlog(boolean IsBlog) {
+        this.IsBlog = IsBlog;
+    }
+
+    public boolean getIsTrash() {
+        return this.IsTrash;
+    }
+
+    public void setIsTrash(boolean IsTrash) {
+        this.IsTrash = IsTrash;
+    }
+
+    public boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public void setIsDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public boolean getDirty() {
@@ -227,47 +270,52 @@ public class Note implements Parcelable {
     }
 
     protected Note(Parcel in) {
-        this.noteId = in.readString();
-        this.notebookId = in.readString();
-        this.userId = in.readString();
-        this.title = in.readString();
-        this.tags = in.readString();
-        this.content = in.readString();
-        this.markdown = in.readByte() != 0;
-        this.blog = in.readByte() != 0;
-        this.trash = in.readByte() != 0;
+        this.id = in.readLong();
+        this.NoteId = in.readString();
+        this.NotebookId = in.readString();
+        this.UserId = in.readString();
+        this.Title = in.readString();
+        this.Desc = in.readString();
+        this.Tags = in.readString();
+        this.Abstract = in.readString();
+        this.Content = in.readString();
+        this.IsMarkdown = in.readByte() != 0;
+        this.IsBlog = in.readByte() != 0;
+        this.IsTrash = in.readByte() != 0;
+        this.isDeleted = in.readByte() != 0;
+        this.Usn = in.readInt();
         this.files = in.readString();
-        this.createdTime = in.readLong();
-        this.updatedTime = in.readLong();
-        this.publishTime = in.readLong();
-        this.usn = in.readInt();
-        this.desc = in.readString();
-        this.abstractNote = in.readString();
+        this.CreatedTime = in.readLong();
+        this.UpdatedTime = in.readLong();
+        this.PublishTime = in.readLong();
         this.dirty = in.readByte() != 0;
         this.uploading = in.readByte() != 0;
     }
 
-    @Generated(hash = 216805632)
-    public Note(String noteId, String notebookId, String userId, String title, String tags,
-            String content, boolean markdown, boolean blog, boolean trash, String files,
-            long createdTime, long updatedTime, long publishTime, int usn, String desc,
-            String abstractNote, boolean dirty, boolean uploading) {
-        this.noteId = noteId;
-        this.notebookId = notebookId;
-        this.userId = userId;
-        this.title = title;
-        this.tags = tags;
-        this.content = content;
-        this.markdown = markdown;
-        this.blog = blog;
-        this.trash = trash;
+    @Generated(hash = 652246157)
+    public Note(long id, String NoteId, String NotebookId, String UserId, String Title,
+            String Desc, String Tags, String Abstract, String Content, boolean IsMarkdown,
+            boolean IsBlog, boolean IsTrash, boolean isDeleted, int Usn, String files,
+            long CreatedTime, long UpdatedTime, long PublishTime, boolean dirty,
+            boolean uploading) {
+        this.id = id;
+        this.NoteId = NoteId;
+        this.NotebookId = NotebookId;
+        this.UserId = UserId;
+        this.Title = Title;
+        this.Desc = Desc;
+        this.Tags = Tags;
+        this.Abstract = Abstract;
+        this.Content = Content;
+        this.IsMarkdown = IsMarkdown;
+        this.IsBlog = IsBlog;
+        this.IsTrash = IsTrash;
+        this.isDeleted = isDeleted;
+        this.Usn = Usn;
         this.files = files;
-        this.createdTime = createdTime;
-        this.updatedTime = updatedTime;
-        this.publishTime = publishTime;
-        this.usn = usn;
-        this.desc = desc;
-        this.abstractNote = abstractNote;
+        this.CreatedTime = CreatedTime;
+        this.UpdatedTime = UpdatedTime;
+        this.PublishTime = PublishTime;
         this.dirty = dirty;
         this.uploading = uploading;
     }

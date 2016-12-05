@@ -6,11 +6,13 @@ import android.util.Log;
 import com.squareup.leakcanary.LeakCanary;
 import com.wkswind.leanote.database.DaoSession;
 import com.wkswind.leanote.database.SqlHelper;
+import com.wkswind.leanote.utils.RetrofitUtils;
 
 import org.greenrobot.greendao.AbstractDaoMaster;
 import org.greenrobot.greendao.AbstractDaoSession;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 
+import retrofit2.Retrofit;
 import timber.log.Timber;
 
 /**
@@ -29,7 +31,7 @@ public class LeanoteApplication extends Application {
             return;
         }
         LeakCanary.install(this);
-
+        RetrofitUtils.init(this);
         if(BuildConfig.DEBUG){
             Timber.plant(new Timber.DebugTree());
         }else {

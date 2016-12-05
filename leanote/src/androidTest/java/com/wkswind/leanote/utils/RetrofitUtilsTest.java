@@ -9,9 +9,14 @@ import io.reactivex.functions.Consumer;
 import static org.junit.Assert.*;
 
 /**
- * Created by Administrator on 2016-12-2.
+ * Created by Administrator on 2016-12-5.
  */
 public class RetrofitUtilsTest {
+    @Test
+    public void rxLogin() throws Exception {
+
+    }
+
     @Test
     public void login() throws Exception {
         final String email = "wkswind@gmail.com";
@@ -24,6 +29,12 @@ public class RetrofitUtilsTest {
                 assertEquals(user.getToken(), "58411fe7ab64417032005dfa");
             }
         });
+    }
+
+    @Test
+    public void syncNote() throws Exception {
+        RetrofitUtils.syncNote("wtf", 0);
+
     }
 
 }

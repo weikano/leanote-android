@@ -3,75 +3,94 @@ package com.wkswind.leanote.database;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.wkswind.leanote.base.LeanoteResponseBody;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
-/**
- * Created by Administrator on 2016-12-2.
- */
+
 @Entity
-public class Notebook implements Parcelable {
-    @Id
-    private String id;
-    private String pid;
-    private String userId;
-    private String title;
-    private String urlTitle;
-    private boolean blog;
+public class Notebook extends LeanoteResponseBody implements Parcelable {
+    @Id(autoincrement = true)
+    private long id;
+    private String NotebookId;
+
+    private String ParentNotebookId;
+    private int Seq;
+    private String UserId;
+    private String Title;
+    private String UrlTitle;
+    private boolean IsBlog;
     private boolean trash;
-    private boolean deleted;
-    private long createdTime;
-    private long updatedTime;
-    private int usn;
+    private boolean IsDeleted;
+    private long CreatedTime;
+    private long UpdatedTime;
+    private int Usn;
     private boolean dirty;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getPid() {
-        return pid;
+    public String getNotebookId() {
+        return NotebookId;
     }
 
-    public void setPid(String pid) {
-        this.pid = pid;
+    public void setNotebookId(String notebookId) {
+        NotebookId = notebookId;
+    }
+
+    public String getParentNotebookId() {
+        return ParentNotebookId;
+    }
+
+    public void setParentNotebookId(String parentNotebookId) {
+        ParentNotebookId = parentNotebookId;
+    }
+
+    public int getSeq() {
+        return Seq;
+    }
+
+    public void setSeq(int seq) {
+        Seq = seq;
     }
 
     public String getUserId() {
-        return userId;
+        return UserId;
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        UserId = userId;
     }
 
     public String getTitle() {
-        return title;
+        return Title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        Title = title;
     }
 
     public String getUrlTitle() {
-        return urlTitle;
+        return UrlTitle;
     }
 
     public void setUrlTitle(String urlTitle) {
-        this.urlTitle = urlTitle;
+        UrlTitle = urlTitle;
     }
 
     public boolean isBlog() {
-        return blog;
+        return IsBlog;
     }
 
     public void setBlog(boolean blog) {
-        this.blog = blog;
+        IsBlog = blog;
     }
 
     public boolean isTrash() {
@@ -83,35 +102,35 @@ public class Notebook implements Parcelable {
     }
 
     public boolean isDeleted() {
-        return deleted;
+        return IsDeleted;
     }
 
     public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
+        IsDeleted = deleted;
     }
 
     public long getCreatedTime() {
-        return createdTime;
+        return CreatedTime;
     }
 
     public void setCreatedTime(long createdTime) {
-        this.createdTime = createdTime;
+        CreatedTime = createdTime;
     }
 
     public long getUpdatedTime() {
-        return updatedTime;
+        return UpdatedTime;
     }
 
     public void setUpdatedTime(long updatedTime) {
-        this.updatedTime = updatedTime;
+        UpdatedTime = updatedTime;
     }
 
     public int getUsn() {
-        return usn;
+        return Usn;
     }
 
     public void setUsn(int usn) {
-        this.usn = usn;
+        Usn = usn;
     }
 
     public boolean isDirty() {
@@ -129,30 +148,40 @@ public class Notebook implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.pid);
-        dest.writeString(this.userId);
-        dest.writeString(this.title);
-        dest.writeString(this.urlTitle);
-        dest.writeByte(this.blog ? (byte) 1 : (byte) 0);
+        dest.writeLong(this.id);
+        dest.writeString(this.NotebookId);
+        dest.writeString(this.ParentNotebookId);
+        dest.writeInt(this.Seq);
+        dest.writeString(this.UserId);
+        dest.writeString(this.Title);
+        dest.writeString(this.UrlTitle);
+        dest.writeByte(this.IsBlog ? (byte) 1 : (byte) 0);
         dest.writeByte(this.trash ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.deleted ? (byte) 1 : (byte) 0);
-        dest.writeLong(this.createdTime);
-        dest.writeLong(this.updatedTime);
-        dest.writeInt(this.usn);
+        dest.writeByte(this.IsDeleted ? (byte) 1 : (byte) 0);
+        dest.writeLong(this.CreatedTime);
+        dest.writeLong(this.UpdatedTime);
+        dest.writeInt(this.Usn);
         dest.writeByte(this.dirty ? (byte) 1 : (byte) 0);
     }
 
-    public boolean getBlog() {
-        return this.blog;
+    public boolean getIsBlog() {
+        return this.IsBlog;
+    }
+
+    public void setIsBlog(boolean IsBlog) {
+        this.IsBlog = IsBlog;
     }
 
     public boolean getTrash() {
         return this.trash;
     }
 
-    public boolean getDeleted() {
-        return this.deleted;
+    public boolean getIsDeleted() {
+        return this.IsDeleted;
+    }
+
+    public void setIsDeleted(boolean IsDeleted) {
+        this.IsDeleted = IsDeleted;
     }
 
     public boolean getDirty() {
@@ -163,35 +192,39 @@ public class Notebook implements Parcelable {
     }
 
     protected Notebook(Parcel in) {
-        this.id = in.readString();
-        this.pid = in.readString();
-        this.userId = in.readString();
-        this.title = in.readString();
-        this.urlTitle = in.readString();
-        this.blog = in.readByte() != 0;
+        this.id = in.readLong();
+        this.NotebookId = in.readString();
+        this.ParentNotebookId = in.readString();
+        this.Seq = in.readInt();
+        this.UserId = in.readString();
+        this.Title = in.readString();
+        this.UrlTitle = in.readString();
+        this.IsBlog = in.readByte() != 0;
         this.trash = in.readByte() != 0;
-        this.deleted = in.readByte() != 0;
-        this.createdTime = in.readLong();
-        this.updatedTime = in.readLong();
-        this.usn = in.readInt();
+        this.IsDeleted = in.readByte() != 0;
+        this.CreatedTime = in.readLong();
+        this.UpdatedTime = in.readLong();
+        this.Usn = in.readInt();
         this.dirty = in.readByte() != 0;
     }
 
-    @Generated(hash = 766654249)
-    public Notebook(String id, String pid, String userId, String title, String urlTitle, boolean blog,
-            boolean trash, boolean deleted, long createdTime, long updatedTime, int usn,
-            boolean dirty) {
+    @Generated(hash = 2007669597)
+    public Notebook(long id, String NotebookId, String ParentNotebookId, int Seq, String UserId,
+            String Title, String UrlTitle, boolean IsBlog, boolean trash, boolean IsDeleted,
+            long CreatedTime, long UpdatedTime, int Usn, boolean dirty) {
         this.id = id;
-        this.pid = pid;
-        this.userId = userId;
-        this.title = title;
-        this.urlTitle = urlTitle;
-        this.blog = blog;
+        this.NotebookId = NotebookId;
+        this.ParentNotebookId = ParentNotebookId;
+        this.Seq = Seq;
+        this.UserId = UserId;
+        this.Title = Title;
+        this.UrlTitle = UrlTitle;
+        this.IsBlog = IsBlog;
         this.trash = trash;
-        this.deleted = deleted;
-        this.createdTime = createdTime;
-        this.updatedTime = updatedTime;
-        this.usn = usn;
+        this.IsDeleted = IsDeleted;
+        this.CreatedTime = CreatedTime;
+        this.UpdatedTime = UpdatedTime;
+        this.Usn = Usn;
         this.dirty = dirty;
     }
 

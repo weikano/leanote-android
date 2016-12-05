@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.wkswind.leanote.account.AccountUtils;
 import com.wkswind.leanote.base.BaseActivity;
+import com.wkswind.leanote.utils.RetrofitUtils;
 
 import java.util.Arrays;
 
@@ -33,7 +34,7 @@ public class LaunchActivity extends BaseActivity {
         setContentView(R.layout.activity_launch);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        RetrofitUtils.syncNote("wtf", 0);
         observer = new Observer<Account[]>() {
             @Override
             public void onSubscribe(Disposable d) {

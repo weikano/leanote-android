@@ -9,13 +9,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.wkswind.leanote.BuildConfig;
+import com.wkswind.leanote.base.LeanoteResponseBody;
 import com.wkswind.leanote.utils.Utils;
 
 /**
  * Created by Administrator on 2016-12-2.
  */
 
-public class LeanoteAccount implements Parcelable {
+public class LeanoteAccount extends LeanoteResponseBody implements Parcelable {
 
     private String UserId;
     private String Email;

@@ -12,6 +12,6 @@ import org.greenrobot.greendao.database.DatabaseOpenHelper;
 
 public class SqlHelper extends DatabaseOpenHelper {
     public SqlHelper(Context context) {
-        super(context, "leanote.db", 2);
+        super(context, "leanote.db", 3);
     }
 }
