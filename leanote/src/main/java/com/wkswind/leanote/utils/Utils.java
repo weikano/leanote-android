@@ -6,8 +6,13 @@ import android.support.annotation.Nullable;
 import android.util.Base64;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.wkswind.leanote.BuildConfig;
+import com.wkswind.leanote.database.Note;
+import com.wkswind.leanote.gson.NoteTypeAdapter;
 
+import java.lang.reflect.Modifier;
 import java.security.NoSuchAlgorithmException;
 
 import se.simbio.encryption.Encryption;
@@ -77,5 +82,9 @@ public class Utils {
 
     public static String getHost(){
         return "https://leanote.com/api/";
+    }
+
+    public static Gson defaultGson(){
+        return new GsonBuilder().registerTypeAdapter(Note.class, new NoteTypeAdapter()).excludeFieldsWithModifiers(Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE).serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
     }
 }

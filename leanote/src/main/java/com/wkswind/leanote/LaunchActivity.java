@@ -19,6 +19,7 @@ import com.wkswind.leanote.account.AccountUtils;
 import com.wkswind.leanote.base.BaseActivity;
 import com.wkswind.leanote.database.Note;
 import com.wkswind.leanote.utils.RetrofitUtils;
+import com.wkswind.leanote.utils.UtilsTest;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +31,6 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class LaunchActivity extends BaseActivity {
-    Observer<Account[]> observer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,43 +38,23 @@ public class LaunchActivity extends BaseActivity {
         setContentView(R.layout.activity_launch);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        RetrofitUtils.syncNote("wtf", 0).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<Note>>() {
-            @Override
-            public void accept(List<Note> notes) throws Exception {
-
-            }
-        });
-        observer = new Observer<Account[]>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(Account[] value) {
-                if(value == null || value.length == 0){
-
-                }else {
-
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        };
 
         checkAccount();
+        UtilsTest.gson();
     }
 
     private void checkAccount() {
-        AccountUtils.getAccount(this).subscribe(observer);
+        AccountUtils.hasAccount(this).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                if(aBoolean){
+                    Toast.makeText(LaunchActivity.this, "已经登录", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(LaunchActivity.this, "没有登录", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     @Override

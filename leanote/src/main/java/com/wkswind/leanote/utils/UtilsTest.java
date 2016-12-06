@@ -1,29 +1,16 @@
-package com.wkswind.leanote.database;
-
-import android.test.AndroidTestCase;
+package com.wkswind.leanote.utils;
 
 import com.google.gson.Gson;
-import com.wkswind.leanote.utils.Utils;
-
-import org.junit.Test;
+import com.wkswind.leanote.database.Note;
 
 import timber.log.Timber;
 
 /**
- * Created by Administrator on 2016-12-2.
+ * Created by Administrator on 2016-12-6.
  */
-public class UtilsTest {
-    @Test
-    public void testNewSession() throws Exception {
-        Note note = new Note();
-        note.setNoteId("noteId");
-        note.setNotebookId("notebookId");
-        note.setUserId("userId");
-//        assertEquals(SqlUtils.newSession(mContext).getNoteDao().insert(note)>0, true);
-    }
 
-    @Test
-    public void gson() {
+public class UtilsTest {
+    public static void gson(){
         Gson gson = Utils.defaultGson();
         Note note = new Note();
         note.setUserId("userId");
@@ -45,7 +32,9 @@ public class UtilsTest {
         note.setMarkdown(true);
         note.setTags("1,2,3");
         note.setTitle("title");
+        String str = gson.toJson(note);
+        Note newNote = gson.fromJson(str, Note.class);
         Timber.i(gson.toJson(note));
-    }
 
+    }
 }
