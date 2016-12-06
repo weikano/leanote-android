@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.wkswind.leanote.BuildConfig;
 import com.wkswind.leanote.database.Note;
-import com.wkswind.leanote.database.Notebook;
 import com.wkswind.leanote.gson.CustomTypeAdapter;
 
 import java.lang.reflect.Modifier;
@@ -86,6 +85,6 @@ public class Utils {
     }
 
     public static Gson defaultGson(){
-        return new GsonBuilder().registerTypeAdapter(Note.class, new CustomTypeAdapter.NoteTypeAdapter()).registerTypeAdapter(Notebook.class, new CustomTypeAdapter.NotebookTypeAdapter()).excludeFieldsWithModifiers(Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE).serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        return new GsonBuilder().registerTypeAdapter(Note.class, new CustomTypeAdapter.NoteTypeAdapter()).excludeFieldsWithModifiers(Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE).serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
     }
 }

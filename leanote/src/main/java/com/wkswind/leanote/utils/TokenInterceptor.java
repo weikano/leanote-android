@@ -5,7 +5,6 @@ import android.accounts.AccountManager;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.wkswind.leanote.BuildConfig;
 import com.wkswind.leanote.account.LeanoteAccount;
 import com.wkswind.leanote.base.LeanoteResponseBody;
@@ -14,23 +13,19 @@ import java.io.IOException;
 
 import okhttp3.FormBody;
 import okhttp3.Interceptor;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okio.BufferedSink;
-import retrofit2.Call;
-import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
 /**
  * 每次请求后都会根据返回值判断是否需要重新登录获取Token
  */
-public class TokenInterceptor implements Interceptor {
+class TokenInterceptor implements Interceptor {
     private final Context context;
     private final AccountManager am;
     private final String packageName;
-    public TokenInterceptor(Context context){
+    TokenInterceptor(Context context){
         this.context = context;
         am = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
         packageName = context.getPackageName();

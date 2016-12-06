@@ -5,12 +5,10 @@ import android.content.Context;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.wkswind.leanote.account.LeanoteAccount;
 import com.wkswind.leanote.database.Note;
-import com.wkswind.leanote.database.Notebook;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import okhttp3.CacheControl;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -20,11 +18,6 @@ import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.POST;
-
-/**
- * Created by Administrator on 2016-12-2.
- */
 
 public class RetrofitUtils {
     private static OkHttpClient.Builder defaultClientBuilder(){
@@ -54,7 +47,7 @@ public class RetrofitUtils {
         return instance.create(LeanoteService.class).login(email, pwd);
     }
 
-    public static okhttp3.Call loginNormal(String email, String pwd){
+    static okhttp3.Call loginNormal(String email, String pwd){
         FormBody body = new FormBody.Builder().add("email",email).add("pwd",pwd).build();
         HttpUrl host = HttpUrl.parse(Utils.getHost());
         List<String> segs = host.pathSegments();
@@ -67,7 +60,7 @@ public class RetrofitUtils {
         return defaultClientBuilder().build().newCall(request);
     }
 
-    public static Observable<List<Note>> syncNote(String token, int maxEntry){
+    static Observable<List<Note>> syncNote(String token, int maxEntry){
         return instance.create(LeanoteService.class).getNoteList(token, maxEntry);
     }
 }

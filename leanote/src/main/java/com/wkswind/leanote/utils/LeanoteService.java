@@ -11,15 +11,9 @@ import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
-/**
- * Created by Administrator on 2016-12-2.
- */
-
-public interface LeanoteService {
+interface LeanoteService {
     @FormUrlEncoded
     @POST("auth/login")
     Observable<LeanoteAccount> rxLogin(@Field("email") String email, @Field("pwd") String pwd);
