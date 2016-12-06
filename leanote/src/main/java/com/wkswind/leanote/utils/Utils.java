@@ -10,7 +10,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.wkswind.leanote.BuildConfig;
 import com.wkswind.leanote.database.Note;
-import com.wkswind.leanote.gson.NoteTypeAdapter;
+import com.wkswind.leanote.database.Notebook;
+import com.wkswind.leanote.gson.CustomTypeAdapter;
 
 import java.lang.reflect.Modifier;
 import java.security.NoSuchAlgorithmException;
@@ -71,7 +72,7 @@ public class Utils {
     }
 
     @Nullable
-    public static String decrypt(@NonNull String cipher){
+    static String decrypt(@NonNull String cipher){
         try {
             return defaultEncryption().decrypt(cipher);
         } catch (Exception e) {
@@ -80,11 +81,11 @@ public class Utils {
         return null;
     }
 
-    public static String getHost(){
+    static String getHost(){
         return "https://leanote.com/api/";
     }
 
     public static Gson defaultGson(){
-        return new GsonBuilder().registerTypeAdapter(Note.class, new NoteTypeAdapter()).excludeFieldsWithModifiers(Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE).serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        return new GsonBuilder().registerTypeAdapter(Note.class, new CustomTypeAdapter.NoteTypeAdapter()).registerTypeAdapter(Notebook.class, new CustomTypeAdapter.NotebookTypeAdapter()).excludeFieldsWithModifiers(Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE).serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
     }
 }

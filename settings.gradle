@@ -1,1 +1,1 @@
-include ':app', ':leanote'
+include ':leanote'

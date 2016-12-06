@@ -11,5 +11,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
 public @interface String2Array {
-    String delimiter();
+    String delimiter() default ",";
 }

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.wkswind.leanote.base.LeanoteResponseBody;
+import com.wkswind.leanote.gson.String2Array;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
@@ -21,6 +22,7 @@ public class Note extends LeanoteResponseBody implements Parcelable {
     private String UserId;
     private String Title;
     private String Desc;
+    @String2Array
     private String Tags;
     private String Abstract;
     private String Content;
@@ -30,6 +32,7 @@ public class Note extends LeanoteResponseBody implements Parcelable {
     private boolean IsTrash;
     private boolean isDeleted;
     private int Usn;
+    @String2Array
     private String files;
     private long CreatedTime;
     private long UpdatedTime;
