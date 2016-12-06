@@ -104,7 +104,7 @@ public class LeanoteAccount extends LeanoteResponseBody implements Parcelable {
         final Intent intent = new Intent();
         final AccountManager am = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
         final Account account = new Account(Email, BuildConfig.ACCOUNT_TYPE);
-        final String cipher = Utils.encrypt(context, password);
+        final String cipher = Utils.encrypt(password);
         if(addAccount){
             final Bundle userData = new Bundle();
             userData.putString(AccountUtils.KEY_USER_ID, UserId);

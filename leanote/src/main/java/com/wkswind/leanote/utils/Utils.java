@@ -2,19 +2,21 @@ package com.wkswind.leanote.utils;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.Base64;
 import android.view.inputmethod.InputMethodManager;
 
-import com.facebook.android.crypto.keychain.AndroidConceal;
-import com.facebook.android.crypto.keychain.SharedPrefsBackedKeyChain;
-import com.facebook.crypto.Crypto;
-import com.facebook.crypto.CryptoConfig;
-import com.facebook.crypto.Entity;
-import com.facebook.crypto.keychain.KeyChain;
 import com.wkswind.leanote.BuildConfig;
 
+import java.security.NoSuchAlgorithmException;
+
+import se.simbio.encryption.Encryption;
 import timber.log.Timber;
 
 public class Utils {
+
+    private static Encryption encryption;
+
     public static String generateKeyPrefix(@NonNull Class<?> clazz) {
         return clazz.getName()+".";
     }
@@ -26,43 +28,47 @@ public class Utils {
         }
     }
 
-    private static Crypto crypto;
-    private static Entity entity;
-
-    private static Entity defaultEntity(){
-        if(entity == null){
+    private static Encryption defaultEncryption(){
+        if(encryption == null) {
             synchronized (Utils.class){
-                if(entity == null){
-                    entity = Entity.create(BuildConfig.ACCOUNT_TYPE);
+                if(encryption == null){
+                    try {
+                        encryption = new Encryption.Builder().setKeyLength(128)
+                                .setKeyAlgorithm("AES")
+                                .setCharsetName("UTF8")
+                                .setIterationCount(1)
+                                .setKey(BuildConfig.ACCOUNT_TYPE)
+                                .setDigestAlgorithm("SHA1")
+                                .setSalt(BuildConfig.APPLICATION_ID)
+                                .setBase64Mode(Base64.DEFAULT)
+                                .setAlgorithm("AES/CBC/PKCS5Padding")
+                                .setSecureRandomAlgorithm("SHA1PRNG")
+                                .setSecretKeyType("PBKDF2WithHmacSHA1")
+                                .setIv(new byte[] { 29, 88, -79, -101, -108, -38, -126, 90, 52, 101, -35, 114, 12, -48, -66, -30 }) .build();
+                    } catch (NoSuchAlgorithmException e) {
+                        Timber.e(e);
+//                        e.printStackTrace();
+                    }
                 }
             }
         }
-        return entity;
-    }
-    private static Crypto defaultCrypto(Context context){
-        if(crypto == null) {
-            synchronized (Utils.class){
-                if(crypto == null){
-                    KeyChain keyChain = new SharedPrefsBackedKeyChain(context, CryptoConfig.KEY_256);
-                    crypto = AndroidConceal.get().createDefaultCrypto(keyChain);
-                }
-            }
-        }
-        return crypto;
+        return encryption;
     }
 
-    public static String encrypt(@NonNull Context context, @NonNull String plain){
+    @Nullable
+    public static String encrypt(@NonNull String plain){
         try {
-            return new String(defaultCrypto(context).encrypt(plain.getBytes(), defaultEntity()));
+            return defaultEncryption().encrypt(plain);
         } catch (Exception e){
             Timber.e(e);
         }
         return null;
     }
 
-    public static String decrypt(@NonNull Context context,@NonNull String cipher){
+    @Nullable
+    public static String decrypt(@NonNull String cipher){
         try {
-            return new String(defaultCrypto(context).decrypt(cipher.getBytes(), defaultEntity()));
+            return defaultEncryption().decrypt(cipher);
         } catch (Exception e) {
             Timber.e(e);
         }

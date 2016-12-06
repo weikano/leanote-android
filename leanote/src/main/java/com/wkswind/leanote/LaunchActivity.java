@@ -17,13 +17,17 @@ import android.widget.Toast;
 
 import com.wkswind.leanote.account.AccountUtils;
 import com.wkswind.leanote.base.BaseActivity;
+import com.wkswind.leanote.database.Note;
 import com.wkswind.leanote.utils.RetrofitUtils;
 
 import java.util.Arrays;
+import java.util.List;
 
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class LaunchActivity extends BaseActivity {
     Observer<Account[]> observer;
@@ -34,7 +38,12 @@ public class LaunchActivity extends BaseActivity {
         setContentView(R.layout.activity_launch);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        RetrofitUtils.syncNote("wtf", 0);
+        RetrofitUtils.syncNote("wtf", 0).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<Note>>() {
+            @Override
+            public void accept(List<Note> notes) throws Exception {
+
+            }
+        });
         observer = new Observer<Account[]>() {
             @Override
             public void onSubscribe(Disposable d) {
