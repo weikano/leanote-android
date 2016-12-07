@@ -3,13 +3,16 @@ package com.wkswind.leanote.database;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.JsonAdapter;
 import com.wkswind.leanote.base.LeanoteResponseBody;
+import com.wkswind.leanote.gson.CustomTypeAdapter;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
-
+@JsonAdapter(value = CustomTypeAdapter.NotebookTypeAdapter.class)
 @Entity
 public class Notebook extends LeanoteResponseBody implements Parcelable {
     @Id(autoincrement = true)
@@ -24,7 +27,9 @@ public class Notebook extends LeanoteResponseBody implements Parcelable {
     private boolean IsBlog;
     private boolean trash;
     private boolean IsDeleted;
+    @Expose
     private long CreatedTime;
+    @Expose
     private long UpdatedTime;
     private int Usn;
     private boolean dirty;

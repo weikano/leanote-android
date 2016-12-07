@@ -22,8 +22,9 @@
     <android.support.design.widget.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemBackground="@color/colorPrimary"
+        app:itemBackground="@drawable/bottom_nav_item_bg"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
-        app:menu="@menu/nav_launch"/>
+        app:menu="@menu/nav_launch"
+        android:elevation="8dp"/>
 </LinearLayout>

@@ -3,16 +3,18 @@ package com.wkswind.leanote.database;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.JsonAdapter;
 import com.wkswind.leanote.base.LeanoteResponseBody;
+import com.wkswind.leanote.gson.CustomTypeAdapter;
 import com.wkswind.leanote.gson.String2Array;
+import com.wkswind.leanote.gson.UTC2Long;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
-/**
- * Created by Administrator on 2016-12-2.
- */
+@JsonAdapter(CustomTypeAdapter.NoteTypeAdapter.class)
 @Entity
 public class Note extends LeanoteResponseBody implements Parcelable {
     @Id(autoincrement = true)
@@ -33,9 +35,12 @@ public class Note extends LeanoteResponseBody implements Parcelable {
     private boolean isDeleted;
     private int Usn;
     @String2Array
-    private String files;
+    private String Files;
+    @UTC2Long
     private long CreatedTime;
+    @UTC2Long
     private long UpdatedTime;
+    @UTC2Long
     private long PublishTime;
     private boolean dirty;
     private boolean uploading;
@@ -153,11 +158,11 @@ public class Note extends LeanoteResponseBody implements Parcelable {
     }
 
     public String getFiles() {
-        return files;
+        return Files;
     }
 
     public void setFiles(String files) {
-        this.files = files;
+        Files = files;
     }
 
     public long getCreatedTime() {
@@ -221,7 +226,7 @@ public class Note extends LeanoteResponseBody implements Parcelable {
         dest.writeByte(this.IsTrash ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isDeleted ? (byte) 1 : (byte) 0);
         dest.writeInt(this.Usn);
-        dest.writeString(this.files);
+        dest.writeString(this.Files);
         dest.writeLong(this.CreatedTime);
         dest.writeLong(this.UpdatedTime);
         dest.writeLong(this.PublishTime);
@@ -287,7 +292,7 @@ public class Note extends LeanoteResponseBody implements Parcelable {
         this.IsTrash = in.readByte() != 0;
         this.isDeleted = in.readByte() != 0;
         this.Usn = in.readInt();
-        this.files = in.readString();
+        this.Files = in.readString();
         this.CreatedTime = in.readLong();
         this.UpdatedTime = in.readLong();
         this.PublishTime = in.readLong();
@@ -295,10 +300,10 @@ public class Note extends LeanoteResponseBody implements Parcelable {
         this.uploading = in.readByte() != 0;
     }
 
-    @Generated(hash = 652246157)
+    @Generated(hash = 188565444)
     public Note(long id, String NoteId, String NotebookId, String UserId, String Title,
             String Desc, String Tags, String Abstract, String Content, boolean IsMarkdown,
-            boolean IsBlog, boolean IsTrash, boolean isDeleted, int Usn, String files,
+            boolean IsBlog, boolean IsTrash, boolean isDeleted, int Usn, String Files,
             long CreatedTime, long UpdatedTime, long PublishTime, boolean dirty,
             boolean uploading) {
         this.id = id;
@@ -315,7 +320,7 @@ public class Note extends LeanoteResponseBody implements Parcelable {
         this.IsTrash = IsTrash;
         this.isDeleted = isDeleted;
         this.Usn = Usn;
-        this.files = files;
+        this.Files = Files;
         this.CreatedTime = CreatedTime;
         this.UpdatedTime = UpdatedTime;
         this.PublishTime = PublishTime;

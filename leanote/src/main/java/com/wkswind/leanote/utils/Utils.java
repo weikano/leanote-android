@@ -85,6 +85,6 @@ public class Utils {
     }
 
     public static Gson defaultGson(){
-        return new GsonBuilder().registerTypeAdapter(Note.class, new CustomTypeAdapter.NoteTypeAdapter()).excludeFieldsWithModifiers(Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE).serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        return new GsonBuilder().excludeFieldsWithModifiers(Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE).serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
     }
 }

@@ -5,10 +5,6 @@ import com.wkswind.leanote.database.Note;
 
 import timber.log.Timber;
 
-/**
- * Created by Administrator on 2016-12-6.
- */
-
 public class UtilsTest {
     public static void gson(){
         Gson gson = Utils.defaultGson();
@@ -25,16 +21,14 @@ public class UtilsTest {
         note.setDirty(true);
         note.setFiles("1,2,3,4");
         note.setId(111);
-        note.setIsBlog(true);
-        note.setIsDeleted(true);
-        note.setIsMarkdown(true);
-        note.setIsTrash(true);
         note.setMarkdown(true);
         note.setTags("1,2,3");
         note.setTitle("title");
+        note.setCreatedTime(System.currentTimeMillis());
         String str = gson.toJson(note);
+        Timber.i(str);
         Note newNote = gson.fromJson(str, Note.class);
-        Timber.i(gson.toJson(note));
+
 
     }
 }
