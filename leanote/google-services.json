@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "730664369864-f1vpp81363pgsdm3jet2a73is6tcllgc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wkswind.leanote",
+            "certificate_hash": "10CC291AE3F01C5DD76144709C6244039F4CC217"
+          }
+        },
+        {
           "client_id": "730664369864-7hlgqm08g1lclevsrchjjjg5gduic5ou.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
