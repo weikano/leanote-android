@@ -52,9 +52,11 @@ public class LaunchActivity extends BaseActivity {
                 if (aBoolean) {
                     Toast.makeText(LaunchActivity.this, "已经登录", Toast.LENGTH_SHORT).show();
                 } else {
-                    fm.beginTransaction().add(R.id.content, new UnLoginFragment(), UnLoginFragment.class.getSimpleName()).commit();
+//                    fm.beginTransaction().add(R.id.content, new UnLoginFragment(), UnLoginFragment.class.getSimpleName()).commit();
+
 //                    Toast.makeText(LaunchActivity.this, "没有登录", Toast.LENGTH_SHORT).show();
                 }
+                fm.beginTransaction().add(R.id.content, new NoteListFragment(), NoteListFragment.class.getSimpleName()).commit();
             }
         });
 

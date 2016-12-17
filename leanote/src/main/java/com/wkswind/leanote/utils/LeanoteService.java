@@ -17,12 +17,14 @@ interface LeanoteService {
     @FormUrlEncoded
     @POST("auth/login")
     Observable<LeanoteAccount> rxLogin(@Field("email") String email, @Field("pwd") String pwd);
+
     @FormUrlEncoded
     @POST("auth/login")
     Call<LeanoteAccount> login(@Field("email") String email, @Field("pwd") String pwd);
 
     /**
      * 获取笔记，不包含content信息
+     *
      * @param token
      * @param maxEntry
      * @return
@@ -33,6 +35,7 @@ interface LeanoteService {
 
     /**
      * 获取Sync信息
+     *
      * @param token
      * @return
      */
@@ -42,13 +45,15 @@ interface LeanoteService {
 
     /**
      * 根据noteId拉取note信息
+     *
      * @param token
      * @param noteId
      * @return
      */
     @FormUrlEncoded
     @POST("note/getNoteAndContent")
-    Observable<Note> getNoteByNoteId(@Field("token") String token,@Field("noteId") String noteId);
+    Observable<Note> getNoteByNoteId(@Field("token") String token, @Field("noteId") String noteId);
+
     @FormUrlEncoded
     @POST("notebook/getNotebooks")
     Observable<List<Notebook>> getNoteBooks(@Field("token") String token, @Field("maxEntry") int maxEntry);

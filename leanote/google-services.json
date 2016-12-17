@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "730664369864",
+    "firebase_url": "https://leanote-8cb8a.firebaseio.com",
+    "project_id": "leanote-8cb8a",
+    "storage_bucket": "leanote-8cb8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730664369864:android:20932522fc7246bd",
+        "android_client_info": {
+          "package_name": "com.wkswind.leanote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "730664369864-7hlgqm08g1lclevsrchjjjg5gduic5ou.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wkswind.leanote",
+            "certificate_hash": "167CB565BDCCF859F5E609DF51CAF12CE8A9AA8B"
+          }
+        },
+        {
+          "client_id": "730664369864-jh4vofsjjudchbaivbrc0kkp516of58n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLScWRqyEuA26t7nIUxbl77YtGN5a5uQU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "730664369864-jh4vofsjjudchbaivbrc0kkp516of58n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

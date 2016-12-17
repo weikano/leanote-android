@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.wkswind.leanote.BuildConfig;
 import com.wkswind.leanote.base.LeanoteResponseBody;
@@ -110,6 +111,7 @@ public class LeanoteAccount extends LeanoteResponseBody implements Parcelable {
             userData.putString(AccountUtils.KEY_USER_ID, UserId);
             userData.putString(AccountUtils.KEY_EMAIL, Email);
             userData.putString(AccountUtils.KEY_USER_NAME, Username);
+            userData.putString(AccountManager.KEY_AUTHTOKEN, Token);
             am.addAccountExplicitly(account, cipher, userData);
         }else{
             am.invalidateAuthToken(BuildConfig.ACCOUNT_TYPE, Token);
@@ -120,4 +122,5 @@ public class LeanoteAccount extends LeanoteResponseBody implements Parcelable {
         intent.putExtra(AccountManager.KEY_AUTHTOKEN, Token);
         return intent;
     }
+
 }

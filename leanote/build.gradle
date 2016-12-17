@@ -29,6 +29,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+//    def flavors = [1:'com.wkswind.flavor1',2:'com.wkswind.flavor2',3:'com.wkswind.flavor3']
+//    productFlavors {
+//        flavors.each { name, value ->
+//            "$name" {
+//                applicationId value;
+//                buildConfigField("String","CHANNEL","\"$name\"")
+//            }
+//        }
+//    }
 }
 
 dependencies {
@@ -36,9 +46,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.0.1'
-    compile 'com.android.support:recyclerview-v7:25.0.1'
-    compile 'com.android.support:design:25.0.1'
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
@@ -53,3 +63,5 @@ dependencies {
     compile 'com.jakewharton.timber:timber:4.3.1'
     compile 'com.github.simbiose:Encryption:2.0.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

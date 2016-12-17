@@ -4,6 +4,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 
 import com.wkswind.leanote.BuildConfig;
 import com.wkswind.leanote.utils.Utils;
@@ -23,7 +24,7 @@ public class AccountUtils {
     static final String KEY_AUTH_TYPE = Utils.generateKeyPrefix(AccountUtils.class)+"KEY_AUTH_TYPE";
     static final String KEY_ADD_ACCOUNT = Utils.generateKeyPrefix(AccountUtils.class) + "KEY_ADD_ACCOUNT";
 
-    public static Observable<Account[]> getAccount(final Context context){
+    public static Observable<Account[]> getAccount(@NonNull final Context context){
         return Observable.create(new ObservableOnSubscribe<Account[]>() {
             @Override
             public void subscribe(ObservableEmitter<Account[]> e) throws Exception {
@@ -35,7 +36,7 @@ public class AccountUtils {
         });
     }
 
-    public static Observable<Boolean> hasAccount(final Context context){
+    public static Observable<Boolean> hasAccount(@NonNull final Context context){
         return getAccount(context).map(new Function<Account[], Boolean>() {
             @Override
             public Boolean apply(Account[] accounts) throws Exception {
@@ -44,12 +45,17 @@ public class AccountUtils {
         });
     }
 
-    public static void enterLogin(Context context){
+    public static void enterLogin(@NonNull final Context context){
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
     }
 
-
-
-
+    public static String getAuthToken(@NonNull Context context){
+        AccountManager am = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
+        Account[] accounts = am.getAccountsByTypeForPackage(BuildConfig.ACCOUNT_TYPE, context.getPackageName());
+        if(accounts.length > 0){
+            return am.getUserData(accounts[0], AccountManager.KEY_AUTHTOKEN);
+        }
+        return null;
+    }
 }
