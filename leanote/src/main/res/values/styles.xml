@@ -20,4 +20,10 @@
     <style name="Dark.Overlay.LightPopup" parent="ThemeOverlay.AppCompat.Dark">
         <!--<item name="android:background">@color/colorPrimary</item>-->
     </style>
+
+    <style name="title">
+        <item name="android:textSize">@dimen/title_size</item>
+        <item name="android:textColor">@color/material_light_black</item>
+        <item name="android:maxLines">2</item>
+    </style>
 </resources>

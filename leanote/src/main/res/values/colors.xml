@@ -7,4 +7,5 @@
     <!-- loading animation vector colors -->
     <color name="pin">#F83E3E</color>
     <color name="dot">#E2E2E2</color>
+    <color name="ripple_color">@color/colorPrimary</color>
 </resources>

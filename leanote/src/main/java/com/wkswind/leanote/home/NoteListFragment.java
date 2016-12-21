@@ -1,4 +1,4 @@
-package com.wkswind.leanote;
+package com.wkswind.leanote.home;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.wkswind.leanote.R;
 import com.wkswind.leanote.base.BaseFragment;
 
 import java.util.ArrayList;

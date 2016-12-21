@@ -60,7 +60,8 @@ public class RetrofitUtils {
         return defaultClientBuilder().build().newCall(request);
     }
 
-    static Observable<List<Note>> syncNote(String token, int maxEntry){
+    public static Observable<List<Note>> syncNote(String token, int maxEntry){
         return instance.create(LeanoteService.class).getNoteList(token, maxEntry);
     }
+
 }

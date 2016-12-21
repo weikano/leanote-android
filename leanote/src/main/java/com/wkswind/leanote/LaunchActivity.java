@@ -4,10 +4,12 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.util.ArrayMap;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -33,34 +35,22 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class LaunchActivity extends BaseActivity {
-    private FragmentManager fm;
+
+    private ViewPager pager;
+    private TabLayout tab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launch);
+        setContentView(R.layout.activity_launch_new);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        fm = getSupportFragmentManager();
-        checkAccount();
-//        UtilsTest.gson();
-    }
-
-    private void checkAccount() {
-        AccountUtils.hasAccount(this).subscribe(new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean aBoolean) throws Exception {
-                if (aBoolean) {
-                    Toast.makeText(LaunchActivity.this, "已经登录", Toast.LENGTH_SHORT).show();
-                } else {
-//                    fm.beginTransaction().add(R.id.content, new UnLoginFragment(), UnLoginFragment.class.getSimpleName()).commit();
-
-//                    Toast.makeText(LaunchActivity.this, "没有登录", Toast.LENGTH_SHORT).show();
-                }
-                fm.beginTransaction().add(R.id.content, new NoteListFragment(), NoteListFragment.class.getSimpleName()).commit();
-            }
-        });
+        pager = (ViewPager) findViewById(R.id.pager);
+        tab = (TabLayout) findViewById(R.id.tab);
+        tab.setupWithViewPager(pager, true);
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
