@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LaunchActivity"
+            android:name=".HomeActivity"
             android:theme="@style/Launch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

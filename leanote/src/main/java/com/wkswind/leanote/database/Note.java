@@ -2,9 +2,10 @@ package com.wkswind.leanote.database;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.JsonAdapter;
+import com.wkswind.leanote.base.ContentComparator;
 import com.wkswind.leanote.base.LeanoteResponseBody;
 import com.wkswind.leanote.gson.CustomTypeAdapter;
 import com.wkswind.leanote.gson.String2Array;
@@ -16,7 +17,7 @@ import org.greenrobot.greendao.annotation.Generated;
 
 @JsonAdapter(CustomTypeAdapter.NoteTypeAdapter.class)
 @Entity
-public class Note extends LeanoteResponseBody implements Parcelable {
+public class Note extends LeanoteResponseBody implements Parcelable, ContentComparator<Note> {
     @Id(autoincrement = true)
     private long id;
     private String NoteId;
@@ -339,4 +340,9 @@ public class Note extends LeanoteResponseBody implements Parcelable {
             return new Note[size];
         }
     };
+
+    @Override
+    public boolean areContentsTheSame(@NonNull  Note item) {
+        return Title.equals(item.getTitle()) && Content.equals(item.getContent()) && UpdatedTime == item.getUpdatedTime();
+    }
 }

@@ -1,54 +1,40 @@
 package com.wkswind.leanote;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.util.ArrayMap;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.wkswind.leanote.account.AccountUtils;
+import com.wkswind.leanote.adapters.HomeTabAdapter;
 import com.wkswind.leanote.base.BaseActivity;
-import com.wkswind.leanote.database.Note;
-import com.wkswind.leanote.utils.RetrofitUtils;
-import com.wkswind.leanote.utils.UtilsTest;
 
-import java.util.Arrays;
-import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
-public class LaunchActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity {
 
     private ViewPager pager;
     private TabLayout tab;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch_new);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         pager = (ViewPager) findViewById(R.id.pager);
         tab = (TabLayout) findViewById(R.id.tab);
         tab.setupWithViewPager(pager, true);
-
+        pager.setAdapter(new HomeTabAdapter(getSupportFragmentManager()));
     }
 
 
@@ -68,10 +54,10 @@ public class LaunchActivity extends BaseActivity {
                 @Override
                 public void accept(Boolean aBoolean) throws Exception {
                     if (aBoolean) {
-                        Toast.makeText(LaunchActivity.this, "已登录，进入个人信息", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this, "已登录，进入个人信息", Toast.LENGTH_SHORT).show();
                     } else {
-                        AccountUtils.enterLogin(LaunchActivity.this);
-//                        Toast.makeText(LaunchActivity.this, "跳转到登录界面", Toast.LENGTH_SHORT).show();
+                        AccountUtils.enterLogin(HomeActivity.this);
+//                        Toast.makeText(HomeActivity.this, "跳转到登录界面", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
