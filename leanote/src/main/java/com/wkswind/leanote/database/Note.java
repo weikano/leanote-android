@@ -5,21 +5,20 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.JsonAdapter;
+import com.wkswind.leanote.base.BaseEntity;
 import com.wkswind.leanote.base.ContentComparator;
-import com.wkswind.leanote.base.LeanoteResponseBody;
 import com.wkswind.leanote.gson.CustomTypeAdapter;
 import com.wkswind.leanote.gson.String2Array;
 import com.wkswind.leanote.gson.UTC2Long;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+
+import java.util.Comparator;
 
 @JsonAdapter(CustomTypeAdapter.NoteTypeAdapter.class)
 @Entity
-public class Note extends LeanoteResponseBody implements Parcelable, ContentComparator<Note> {
-    @Id(autoincrement = true)
-    private long id;
+public class Note extends BaseEntity implements Parcelable, ContentComparator<Note> {
     private String NoteId;
     private String NotebookId;
     private String UserId;
@@ -33,7 +32,7 @@ public class Note extends LeanoteResponseBody implements Parcelable, ContentComp
     private boolean IsMarkdown;
     private boolean IsBlog;
     private boolean IsTrash;
-    private boolean isDeleted;
+    private boolean IsDeleted;
     private int Usn;
     @String2Array
     private String Files;
@@ -42,17 +41,9 @@ public class Note extends LeanoteResponseBody implements Parcelable, ContentComp
     @UTC2Long
     private long UpdatedTime;
     @UTC2Long
-    private long PublishTime;
+    private long PublicTime;
     private boolean dirty;
     private boolean uploading;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getNoteId() {
         return NoteId;
@@ -143,11 +134,11 @@ public class Note extends LeanoteResponseBody implements Parcelable, ContentComp
     }
 
     public boolean isDeleted() {
-        return isDeleted;
+        return IsDeleted;
     }
 
     public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
+        IsDeleted = deleted;
     }
 
     public int getUsn() {
@@ -182,12 +173,12 @@ public class Note extends LeanoteResponseBody implements Parcelable, ContentComp
         UpdatedTime = updatedTime;
     }
 
-    public long getPublishTime() {
-        return PublishTime;
+    public long getPublicTime() {
+        return PublicTime;
     }
 
-    public void setPublishTime(long publishTime) {
-        PublishTime = publishTime;
+    public void setPublicTime(long publicTime) {
+        PublicTime = publicTime;
     }
 
     public boolean isDirty() {
@@ -213,7 +204,7 @@ public class Note extends LeanoteResponseBody implements Parcelable, ContentComp
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
+        dest.writeLong(getId());
         dest.writeString(this.NoteId);
         dest.writeString(this.NotebookId);
         dest.writeString(this.UserId);
@@ -225,12 +216,12 @@ public class Note extends LeanoteResponseBody implements Parcelable, ContentComp
         dest.writeByte(this.IsMarkdown ? (byte) 1 : (byte) 0);
         dest.writeByte(this.IsBlog ? (byte) 1 : (byte) 0);
         dest.writeByte(this.IsTrash ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.isDeleted ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.IsDeleted ? (byte) 1 : (byte) 0);
         dest.writeInt(this.Usn);
         dest.writeString(this.Files);
         dest.writeLong(this.CreatedTime);
         dest.writeLong(this.UpdatedTime);
-        dest.writeLong(this.PublishTime);
+        dest.writeLong(this.PublicTime);
         dest.writeByte(this.dirty ? (byte) 1 : (byte) 0);
         dest.writeByte(this.uploading ? (byte) 1 : (byte) 0);
     }
@@ -260,11 +251,11 @@ public class Note extends LeanoteResponseBody implements Parcelable, ContentComp
     }
 
     public boolean getIsDeleted() {
-        return this.isDeleted;
+        return this.IsDeleted;
     }
 
     public void setIsDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
+        this.IsDeleted = isDeleted;
     }
 
     public boolean getDirty() {
@@ -279,7 +270,7 @@ public class Note extends LeanoteResponseBody implements Parcelable, ContentComp
     }
 
     protected Note(Parcel in) {
-        this.id = in.readLong();
+        setId(in.readLong());
         this.NoteId = in.readString();
         this.NotebookId = in.readString();
         this.UserId = in.readString();
@@ -291,23 +282,21 @@ public class Note extends LeanoteResponseBody implements Parcelable, ContentComp
         this.IsMarkdown = in.readByte() != 0;
         this.IsBlog = in.readByte() != 0;
         this.IsTrash = in.readByte() != 0;
-        this.isDeleted = in.readByte() != 0;
+        this.IsDeleted = in.readByte() != 0;
         this.Usn = in.readInt();
         this.Files = in.readString();
         this.CreatedTime = in.readLong();
         this.UpdatedTime = in.readLong();
-        this.PublishTime = in.readLong();
+        this.PublicTime = in.readLong();
         this.dirty = in.readByte() != 0;
         this.uploading = in.readByte() != 0;
     }
 
-    @Generated(hash = 188565444)
-    public Note(long id, String NoteId, String NotebookId, String UserId, String Title,
-            String Desc, String Tags, String Abstract, String Content, boolean IsMarkdown,
-            boolean IsBlog, boolean IsTrash, boolean isDeleted, int Usn, String Files,
-            long CreatedTime, long UpdatedTime, long PublishTime, boolean dirty,
-            boolean uploading) {
-        this.id = id;
+    @Generated(hash = 1239938208)
+    public Note(Long id, String NoteId, String NotebookId, String UserId, String Title, String Desc, String Tags,
+            String Abstract, String Content, boolean IsMarkdown, boolean IsBlog, boolean IsTrash, boolean IsDeleted,
+            int Usn, String Files, long CreatedTime, long UpdatedTime, long PublicTime, boolean dirty, boolean uploading) {
+        setId(id);
         this.NoteId = NoteId;
         this.NotebookId = NotebookId;
         this.UserId = UserId;
@@ -319,12 +308,12 @@ public class Note extends LeanoteResponseBody implements Parcelable, ContentComp
         this.IsMarkdown = IsMarkdown;
         this.IsBlog = IsBlog;
         this.IsTrash = IsTrash;
-        this.isDeleted = isDeleted;
+        this.IsDeleted = IsDeleted;
         this.Usn = Usn;
         this.Files = Files;
         this.CreatedTime = CreatedTime;
         this.UpdatedTime = UpdatedTime;
-        this.PublishTime = PublishTime;
+        this.PublicTime = PublicTime;
         this.dirty = dirty;
         this.uploading = uploading;
     }
@@ -345,4 +334,16 @@ public class Note extends LeanoteResponseBody implements Parcelable, ContentComp
     public boolean areContentsTheSame(@NonNull  Note item) {
         return Title.equals(item.getTitle()) && Content.equals(item.getContent()) && UpdatedTime == item.getUpdatedTime();
     }
+
+    @Override
+    public Comparator<Note> getDefaultComparator() {
+        return new Comparator<Note>() {
+            @Override
+            public int compare(Note o1, Note o2) {
+                return (int) (o1.getUpdatedTime() - o2.getUpdatedTime());
+            }
+        };
+    }
+
+
 }

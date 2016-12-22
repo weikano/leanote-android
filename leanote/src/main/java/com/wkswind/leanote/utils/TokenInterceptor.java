@@ -7,7 +7,6 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.wkswind.leanote.BuildConfig;
 import com.wkswind.leanote.account.LeanoteAccount;
-import com.wkswind.leanote.base.LeanoteResponseBody;
 
 import java.io.IOException;
 
@@ -46,10 +45,6 @@ class TokenInterceptor implements Interceptor {
             Gson gson = new Gson();
             LeanoteAccount auth = gson.fromJson(login.body().string(), LeanoteAccount.class);
             auth.saveToAccountManager(context, pwd, false);
-//            login.body().toString();
-//            Call<LeanoteAccount> call = RetrofitUtils.login(account.name, Utils.decrypt(pwd));
-//            LeanoteAccount auth = call.execute().body();
-//            auth.saveToAccountManager(context, pwd, false);
 
             final RequestBody body = request.body();
             final FormBody.Builder builder = new FormBody.Builder();
@@ -66,8 +61,9 @@ class TokenInterceptor implements Interceptor {
             }
             final Request newRequest = request.newBuilder().url(request.url()).method(request.method(),builder.build()).build();
             return chain.proceed(newRequest);
+//            AccountUtils.enterLogin(context);
         }
-        return response;
+        return chain.proceed(request.newBuilder().build());
     }
 
     private boolean isLoginRequest(Request request) {
@@ -76,13 +72,11 @@ class TokenInterceptor implements Interceptor {
 
 
     private boolean isTokenInvalid(Response response) {
-        Gson gson = new Gson();
         try {
-            LeanoteResponseBody item = gson.fromJson(response.body().string(), LeanoteResponseBody.class);
-            return (!item.isOk() && item.getMsg().equals("NOTLOGIN"));
+            return response.isSuccessful() && response.body().string().contains("NOTLOGIN");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false;
+        return true;
     }
 }

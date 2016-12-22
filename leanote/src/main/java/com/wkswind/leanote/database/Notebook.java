@@ -5,18 +5,16 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.JsonAdapter;
-import com.wkswind.leanote.base.LeanoteResponseBody;
+import com.wkswind.leanote.base.BaseEntity;
 import com.wkswind.leanote.gson.CustomTypeAdapter;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
 @JsonAdapter(value = CustomTypeAdapter.NotebookTypeAdapter.class)
 @Entity
-public class Notebook extends LeanoteResponseBody implements Parcelable {
-    @Id(autoincrement = true)
-    private long id;
+public class Notebook extends BaseEntity<BaseEntity> implements Parcelable {
+
     private String NotebookId;
 
     private String ParentNotebookId;
@@ -33,14 +31,6 @@ public class Notebook extends LeanoteResponseBody implements Parcelable {
     private long UpdatedTime;
     private int Usn;
     private boolean dirty;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getNotebookId() {
         return NotebookId;
@@ -153,7 +143,7 @@ public class Notebook extends LeanoteResponseBody implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
+        dest.writeLong(getId());
         dest.writeString(this.NotebookId);
         dest.writeString(this.ParentNotebookId);
         dest.writeInt(this.Seq);
@@ -193,11 +183,12 @@ public class Notebook extends LeanoteResponseBody implements Parcelable {
         return this.dirty;
     }
 
+
     public Notebook() {
     }
 
     protected Notebook(Parcel in) {
-        this.id = in.readLong();
+        setId(in.readLong());
         this.NotebookId = in.readString();
         this.ParentNotebookId = in.readString();
         this.Seq = in.readInt();
@@ -213,11 +204,11 @@ public class Notebook extends LeanoteResponseBody implements Parcelable {
         this.dirty = in.readByte() != 0;
     }
 
-    @Generated(hash = 2007669597)
-    public Notebook(long id, String NotebookId, String ParentNotebookId, int Seq, String UserId,
+    @Generated(hash = 1565693410)
+    public Notebook(Long id, String NotebookId, String ParentNotebookId, int Seq, String UserId,
             String Title, String UrlTitle, boolean IsBlog, boolean trash, boolean IsDeleted,
             long CreatedTime, long UpdatedTime, int Usn, boolean dirty) {
-        this.id = id;
+        setId(id);
         this.NotebookId = NotebookId;
         this.ParentNotebookId = ParentNotebookId;
         this.Seq = Seq;

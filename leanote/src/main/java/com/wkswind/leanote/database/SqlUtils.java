@@ -15,24 +15,19 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 
 public class SqlUtils {
-    
 
-    public static Observable<List<Note>> getNotes(final int size){
-        return Observable.defer(new Callable<ObservableSource<List<Note>>>() {
+
+    public static Observable<List<Note>> getNotes(final int size) {
+        return Observable.create(new ObservableOnSubscribe<List<Note>>() {
             @Override
-            public ObservableSource<List<Note>> call() throws Exception {
-                return Observable.create(new ObservableOnSubscribe<List<Note>>() {
-                    @Override
-                    public void subscribe(ObservableEmitter<List<Note>> e) throws Exception {
-                        e.onNext(LeanoteApplication.getSession().getNoteDao().queryBuilder().orderDesc(NoteDao.Properties.UpdatedTime).limit(size).list());
-                        e.onComplete();
-                    }
-                });
+            public void subscribe(ObservableEmitter<List<Note>> e) throws Exception {
+                e.onNext(LeanoteApplication.getSession().getNoteDao().queryBuilder().orderDesc(NoteDao.Properties.UpdatedTime).limit(size).list());
+                e.onComplete();
             }
         });
     }
 
-    public static Observable<Boolean> deleteBoteById(final Context context ,final long id){
+    public static Observable<Boolean> deleteBoteById(final Context context, final long id) {
         return Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
@@ -43,7 +38,7 @@ public class SqlUtils {
         });
     }
 
-    public static Observable<Boolean> deleteBoteByNotebook(final Context context ,final long notebookId){
+    public static Observable<Boolean> deleteBoteByNotebook(final Context context, final long notebookId) {
         return Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
@@ -55,53 +50,39 @@ public class SqlUtils {
         });
     }
 
-    public static Observable<Boolean> deleteAll(final Context context){
-        return Observable.defer(new Callable<ObservableSource<Boolean>>() {
+    public static Observable<Boolean> deleteAll(final Context context) {
+        return Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
-            public ObservableSource<Boolean> call() throws Exception {
-                return Observable.create(new ObservableOnSubscribe<Boolean>() {
-                    @Override
-                    public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                        LeanoteApplication.getSession().getNoteDao().deleteAll();
-                        e.onNext(true);
-                        e.onComplete();
-                    }
-                });
+            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                LeanoteApplication.getSession().getNoteDao().deleteAll();
+                e.onNext(true);
+                e.onComplete();
             }
         });
     }
 
-    public static Observable<Boolean> addNote( final Note note){
-        return Observable.defer(new Callable<ObservableSource<Boolean>>() {
+    public static Observable<Boolean> addNote(final Note note) {
+        return Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
-            public ObservableSource<Boolean> call() throws Exception {
-                return Observable.create(new ObservableOnSubscribe<Boolean>() {
-                    @Override
-                    public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                        e.onNext(LeanoteApplication.getSession().getNoteDao().insert(note) != -1);
-                        e.onComplete();
-                    }
-                });
+            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                e.onNext(LeanoteApplication.getSession().getNoteDao().insert(note) != -1);
+                e.onComplete();
             }
         });
     }
 
-    public static Observable<Boolean> addNotes( final List<Note> notes){
-        return Observable.defer(new Callable<ObservableSource<Boolean>>() {
+    public static Observable<Boolean> addNotes(final List<Note> notes) {
+        return Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
-            public ObservableSource<Boolean> call() throws Exception {
-                return Observable.create(new ObservableOnSubscribe<Boolean>() {
-                    @Override
-                    public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
-                        LeanoteApplication.getSession().getNoteDao().insertInTx(notes);
-                        e.onNext(true);
-                        e.onComplete();
-                    }
-                });
+            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
+                LeanoteApplication.getSession().getNoteDao().insertInTx(notes);
+                e.onNext(true);
+                e.onComplete();
             }
         });
     }
+}
 
     
 
-}
+

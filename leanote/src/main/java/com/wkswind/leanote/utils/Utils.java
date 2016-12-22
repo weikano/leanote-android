@@ -29,7 +29,7 @@ public class Utils {
     public static void hideInputMethod(@NonNull Context context){
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         if(imm.isActive()){
-            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, InputMethodManager.HIDE_IMPLICIT_ONLY);
         }
     }
 
@@ -85,6 +85,6 @@ public class Utils {
     }
 
     public static Gson defaultGson(){
-        return new GsonBuilder().excludeFieldsWithModifiers(Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE).serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
+        return new GsonBuilder().setVersion(BuildConfig.VERSION_CODE).excludeFieldsWithModifiers(Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE).serializeNulls().excludeFieldsWithoutExposeAnnotation().create();
     }
 }

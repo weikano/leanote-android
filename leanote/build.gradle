@@ -23,6 +23,7 @@ android {
         debug {
             buildConfigField("String","ACCOUNT_TYPE","\"com.wkswind.leanote\"")
         }
+
         release {
             buildConfigField("String","ACCOUNT_TYPE","\"com.wkswind.leanote\"")
             minifyEnabled false
@@ -39,6 +40,10 @@ android {
 //            }
 //        }
 //    }
+}
+
+greendao {
+    schemaVersion 3
 }
 
 dependencies {

@@ -15,23 +15,17 @@ import com.wkswind.leanote.database.Note;
 import java.util.Calendar;
 import java.util.Locale;
 
-/**
- * Created by Administrator on 2016-12-21.
- */
-
-public class NoteViewHolder extends BaseViewHolder<Note> {
-    private TextView title, content, date;
+class NoteViewHolder extends BaseViewHolder<Note> {
+    private TextView title, date;
     private NoteViewHolder(View itemView) {
         super(itemView);
         title = (TextView) itemView.findViewById(R.id.title);
-        content = (TextView) itemView.findViewById(R.id.content);
         date = (TextView) itemView.findViewById(R.id.date);
     }
 
     @Override
     public void bind(Note note) {
         title.setText(note.getTitle());
-        content.setText(note.getContent());
         date.setText(DateUtils.getRelativeTimeSpanString(date.getContext(), note.getUpdatedTime()));
     }
 

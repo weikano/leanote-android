@@ -9,10 +9,6 @@ import com.wkswind.leanote.database.Note;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 2016-12-21.
- */
-
 public class NoteAdapter extends BaseAdapter<NoteViewHolder, Note> {
 
     public NoteAdapter(Context context, List<Note> datas){
@@ -26,6 +22,7 @@ public class NoteAdapter extends BaseAdapter<NoteViewHolder, Note> {
     @Override
     public void onBindViewHolder(NoteViewHolder holder, int position) {
         holder.bind(getItem(position));
+
     }
 
     @Override
@@ -33,6 +30,6 @@ public class NoteAdapter extends BaseAdapter<NoteViewHolder, Note> {
         if(position > getItemCount() - 1){
             return RecyclerView.NO_ID;
         }
-        return getItem(position).getId();
+        return getItem(position).getNoteId().hashCode();
     }
 }

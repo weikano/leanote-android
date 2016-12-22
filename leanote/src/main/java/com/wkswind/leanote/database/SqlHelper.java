@@ -10,8 +10,8 @@ import org.greenrobot.greendao.database.DatabaseOpenHelper;
  * Created by Administrator on 2016-12-2.
  */
 
-public class SqlHelper extends DatabaseOpenHelper {
+public class SqlHelper extends DaoMaster.OpenHelper {
     public SqlHelper(Context context) {
-        super(context, "leanote.db", 5);
+        super(context, "leanote.db");
     }
 }

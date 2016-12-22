@@ -7,10 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
 import com.wkswind.leanote.BuildConfig;
-import com.wkswind.leanote.base.LeanoteResponseBody;
 import com.wkswind.leanote.utils.Utils;
 
 /**
