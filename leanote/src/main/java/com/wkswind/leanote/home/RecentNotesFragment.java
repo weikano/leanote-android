@@ -48,6 +48,7 @@ public class RecentNotesFragment extends BaseFragment {
     private SwipeRefreshLayout refresh;
     private NoteAdapter adapter;
     private Observable<List<Note>> network;
+    private final static int PAGE_SIZE = 7;
 
     @Nullable
     @Override
@@ -95,14 +96,14 @@ public class RecentNotesFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        network = RetrofitUtils.syncNote(AccountUtils.getAuthToken(getActivity()), 20).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).doOnNext(new Consumer<List<Note>>() {
+        network = RetrofitUtils.syncNote(AccountUtils.getAuthToken(getActivity()), PAGE_SIZE).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).doOnNext(new Consumer<List<Note>>() {
             @Override
             public void accept(List<Note> notes) throws Exception {
                 LeanoteApplication.getSession().getNoteDao().deleteAll();;
                 LeanoteApplication.getSession().getNoteDao().insertInTx(notes);
             }
         });
-        Observable<List<Note>> database = SqlUtils.getNotes(20).subscribeOn(Schedulers.io());
+        Observable<List<Note>> database = SqlUtils.getNotes(PAGE_SIZE).subscribeOn(Schedulers.io());
         Observable.concat(database, network).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).observeOn(Schedulers.io()).map(new Function<List<Note>, List<Note>>() {
             @Override
             public List<Note> apply(List<Note> notes) throws Exception {

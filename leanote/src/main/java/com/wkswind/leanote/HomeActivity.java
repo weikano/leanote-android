@@ -1,6 +1,8 @@
 package com.wkswind.leanote;
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -10,6 +12,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.wkswind.leanote.account.AccountUtils;
@@ -21,20 +25,33 @@ import io.reactivex.functions.Consumer;
 public class HomeActivity extends BaseActivity {
 
     private ViewPager pager;
-    private TabLayout tab;
-    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launch_new);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setContentView(R.layout.activity_launch);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         pager = (ViewPager) findViewById(R.id.pager);
-        tab = (TabLayout) findViewById(R.id.tab);
-        tab.setupWithViewPager(pager, true);
         pager.setAdapter(new HomeTabAdapter(getSupportFragmentManager()));
+//        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) pager.getLayoutParams();
+
+
+        final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
+        bottomNavigationView.setElevation(getResources().getDimensionPixelOffset(R.dimen.material_component_elevation_bottom_navigation));
+        final int margin = 2 * getResources().getDimensionPixelOffset(R.dimen.default_margin);
+        pager.post(new Runnable() {
+            @Override
+            public void run() {
+                pager.setPaddingRelative(0,toolbar.getHeight()+ margin,0, bottomNavigationView.getHeight()+margin);
+            }
+        });
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                return false;
+            }
+        });
     }
 
 

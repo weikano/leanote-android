@@ -9,6 +9,7 @@ import java.util.Comparator;
  */
 
 public interface ContentComparator<T> {
+    public boolean areItemsTheSame(@NonNull T item);
     public boolean areContentsTheSame(@NonNull T item);
     public Comparator<T> getDefaultComparator();
 }

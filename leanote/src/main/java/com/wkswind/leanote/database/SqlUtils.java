@@ -21,7 +21,7 @@ public class SqlUtils {
         return Observable.create(new ObservableOnSubscribe<List<Note>>() {
             @Override
             public void subscribe(ObservableEmitter<List<Note>> e) throws Exception {
-                e.onNext(LeanoteApplication.getSession().getNoteDao().queryBuilder().orderDesc(NoteDao.Properties.UpdatedTime).limit(size).list());
+                e.onNext(LeanoteApplication.getSession().getNoteDao().queryBuilder().orderDesc(NoteDao.Properties.UpdatedTime).limit(size).offset(0).list());
                 e.onComplete();
             }
         });

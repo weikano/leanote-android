@@ -15,7 +15,7 @@ import com.wkswind.leanote.utils.Utils;
  * Created by Administrator on 2016-12-2.
  */
 
-public class LeanoteAccount extends LeanoteResponseBody implements Parcelable {
+public class LeanoteAccount implements Parcelable {
 
     private String UserId;
     private String Email;

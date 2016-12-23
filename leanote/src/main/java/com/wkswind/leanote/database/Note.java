@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.JsonAdapter;
-import com.wkswind.leanote.base.BaseEntity;
 import com.wkswind.leanote.base.ContentComparator;
 import com.wkswind.leanote.gson.CustomTypeAdapter;
 import com.wkswind.leanote.gson.String2Array;
@@ -13,12 +13,25 @@ import com.wkswind.leanote.gson.UTC2Long;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 import java.util.Comparator;
 
 @JsonAdapter(CustomTypeAdapter.NoteTypeAdapter.class)
 @Entity
-public class Note extends BaseEntity implements Parcelable, ContentComparator<Note> {
+public class Note implements Parcelable, ContentComparator<Note> {
+    @Id(autoincrement = true)
+    @Expose(deserialize = false, serialize = false)
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     private String NoteId;
     private String NotebookId;
     private String UserId;
@@ -296,7 +309,7 @@ public class Note extends BaseEntity implements Parcelable, ContentComparator<No
     public Note(Long id, String NoteId, String NotebookId, String UserId, String Title, String Desc, String Tags,
             String Abstract, String Content, boolean IsMarkdown, boolean IsBlog, boolean IsTrash, boolean IsDeleted,
             int Usn, String Files, long CreatedTime, long UpdatedTime, long PublicTime, boolean dirty, boolean uploading) {
-        setId(id);
+        this.id = id;
         this.NoteId = NoteId;
         this.NotebookId = NotebookId;
         this.UserId = UserId;
@@ -329,6 +342,11 @@ public class Note extends BaseEntity implements Parcelable, ContentComparator<No
             return new Note[size];
         }
     };
+
+    @Override
+    public boolean areItemsTheSame(@NonNull Note item) {
+        return getNoteId().hashCode() == item.getNoteId().hashCode();
+    }
 
     @Override
     public boolean areContentsTheSame(@NonNull  Note item) {

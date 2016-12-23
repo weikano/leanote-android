@@ -20,7 +20,7 @@ public class UtilsTest {
         note.setDesc("desc");
         note.setDirty(true);
         note.setFiles("1,2,3,4");
-        note.setId(111);
+        note.setId((long) 111);
         note.setMarkdown(true);
         note.setTags("1,2,3");
         note.setTitle("title");

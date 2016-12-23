@@ -20,5 +20,6 @@
     <dimen name="material_component_elevation_search_entry">2dp</dimen>
     <dimen name="material_component_elevation_switch">1dp</dimen>
     <dimen name="default_radius">2dp</dimen>
+    <dimen name="default_margin">8dp</dimen>
     <dimen name="title_size">20sp</dimen>
 </resources>

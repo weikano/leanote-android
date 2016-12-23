@@ -5,15 +5,26 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.JsonAdapter;
-import com.wkswind.leanote.base.BaseEntity;
 import com.wkswind.leanote.gson.CustomTypeAdapter;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 @JsonAdapter(value = CustomTypeAdapter.NotebookTypeAdapter.class)
 @Entity
-public class Notebook extends BaseEntity<BaseEntity> implements Parcelable {
+public class Notebook implements Parcelable {
+    @Id(autoincrement = true)
+    @Expose(deserialize = false, serialize = false)
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     private String NotebookId;
 
@@ -208,7 +219,7 @@ public class Notebook extends BaseEntity<BaseEntity> implements Parcelable {
     public Notebook(Long id, String NotebookId, String ParentNotebookId, int Seq, String UserId,
             String Title, String UrlTitle, boolean IsBlog, boolean trash, boolean IsDeleted,
             long CreatedTime, long UpdatedTime, int Usn, boolean dirty) {
-        setId(id);
+        this.id = id;
         this.NotebookId = NotebookId;
         this.ParentNotebookId = ParentNotebookId;
         this.Seq = Seq;

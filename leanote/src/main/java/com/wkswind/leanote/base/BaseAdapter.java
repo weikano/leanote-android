@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
-public abstract class BaseAdapter<VH extends RecyclerView.ViewHolder, T extends BaseEntity> extends RecyclerView.Adapter<VH> {
+public abstract class BaseAdapter<VH extends RecyclerView.ViewHolder, T extends ContentComparator<T>> extends RecyclerView.Adapter<VH> {
     private List<T> datas;
     protected Context context;
 
@@ -46,7 +46,9 @@ public abstract class BaseAdapter<VH extends RecyclerView.ViewHolder, T extends 
 
             @Override
             public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                return getItemId(oldItemPosition) == newData.get(newItemPosition).getId();
+                T oldItem = getItem(oldItemPosition);
+                T newItem = newData.get(newItemPosition);
+                return oldItem != null && newItem != null && oldItem.areItemsTheSame(newItem);
             }
 
             @Override
